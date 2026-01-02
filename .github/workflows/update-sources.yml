@@ -2,7 +2,7 @@ name: Update KVideo Sources from hafrey1
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 0 点自动运行
+    - cron: '0 0 * * *'  # 每天 UTC 0 点自动运行（北京时间早上 8 点）
   workflow_dispatch:  # 支持手动触发
 
 jobs:
@@ -21,19 +21,18 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          import requests
-          from requests.exceptions import RequestException
+          import urllib.request
+          from urllib.error import URLError
 
-          # 修复后的稳定 URL（移除 /refs/heads/）
+          # 稳定 raw URL
           url = "https://raw.githubusercontent.com/hafrey1/LunaTV-config/main/jingjian.json"
 
           try:
-              response = requests.get(url, timeout=30)
-              response.raise_for_status()
-              data = response.json()
-          except RequestException as e:
+              with urllib.request.urlopen(url, timeout=30) as response:
+                  data = json.loads(response.read().decode('utf-8'))
+          except URLError as e:
               print(f"下载失败: {e}")
-              exit(1)  # 如果下载失败，明确退出
+              exit(1)
 
           api_site = data.get("api_site", {})
 
@@ -44,29 +43,28 @@ jobs:
           normal_base = None
           adult_base = None
 
-          # 全面成人关键词（覆盖当前所有 🔞 开头或敏感词）
+          # 成人关键词（覆盖当前所有敏感源）
           adult_keywords = [
-              "🔞", "91", "麻豆", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
+              "麻豆", "91", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
               "大奶", "奶香", "森林", "辣椒", "鲨鱼", "幸", "黑料", "桃花",
-              "精品", "souav", "AV", "成人", "jin18", "老色逼", "大奶子"
+              "精品", "souav", "老色逼", "大奶子"
           ]
 
-          # 优先普通源：先找卧龙（最稳定）
-          wolong_key = "wolongzyw.com"  # 卧龙资源 key
-          if wolong_key in api_site:
-              normal_base = api_site[wolong_key].get("api")
+          # 优先取卧龙资源（稳定普通源）
+          if "wolongzyw.com" in api_site:
+              normal_base = api_site["wolongzyw.com"].get("api")
 
           # 如果没有卧龙，取第一个非成人源
           if not normal_base:
-              for key, item in api_site.items():
+              for item in api_site.values():
                   name_lower = item.get("name", "").lower()
                   api_url = item.get("api")
                   if api_url and not any(kw.lower() in name_lower for kw in adult_keywords):
                       normal_base = api_url
                       break
 
-          # 成人源：取第一个匹配的（通常是 🔞 开头的第一个）
-          for key, item in api_site.items():
+          # 取第一个成人源
+          for item in api_site.values():
               name_lower = item.get("name", "").lower()
               api_url = item.get("api")
               if api_url and any(kw.lower() in name_lower for kw in adult_keywords):
@@ -88,12 +86,12 @@ jobs:
           with open(normal_path, 'w', encoding='utf-8') as f:
               json.dump(normal_sources, f, indent=2, ensure_ascii=False)
 
-          # 生成 隐藏资源.json（不明显标识）
+          # 生成 隐藏资源.json
           adult_sources = []
           if adult_base:
               adult_sources.append({
                   "id": "extra_source_1",
-                  "name": "备用线路",  # 可改为“VIP通道”、“高级合集”等更隐蔽的词
+                  "name": "备用线路",  # 不明显名称，可改为“VIP通道”、“高级合集”等
                   "baseUrl": adult_base,
                   "group": "adult",
                   "enabled": True
@@ -113,4 +111,4 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add 普通资源.json 隐藏资源.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: generate sources from hafrey1 (fixed URL)" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: generate 普通资源.json and 隐藏资源.json from hafrey1" && git push)
