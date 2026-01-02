@@ -1,0 +1,96 @@
+name: Rewrite LunaTV Sources from hafrey1
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 0 点自动运行（北京时间早上 8 点）
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  rewrite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Download and rewrite sources
+        run: |
+          python - <<'PY'
+          import json
+          import requests
+
+          # 新源 URL
+          url = "https://raw.githubusercontent.com/hafrey1/LunaTV-config/refs/heads/main/jingjian.json"
+
+          # 下载原始 JSON
+          response = requests.get(url)
+          response.raise_for_status()
+          data = response.json()
+
+          api_site = data.get("api_site", {})
+
+          normal_base = None
+          adult_base = None
+
+          # 成人关键词列表（根据当前文件内容覆盖常见敏感词，可随时补充）
+          adult_keywords = [
+              "91", "麻豆", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
+              "大奶", "奶香", "森林", "辣椒", "鲨鱼", "幸", "黑料", "桃花",
+              "精品", "souav", "AV", "成人", "🔞", "jin18"
+          ]
+
+          for key, item in api_site.items():
+              name = item.get("name", "").lower()
+              api_url = item.get("api")
+              if not api_url:
+                  continue
+
+              is_adult = any(kw.lower() in name for kw in adult_keywords)
+
+              if is_adult and adult_base is None:
+                  adult_base = api_url
+              elif not is_adult and normal_base is None:
+                  normal_base = api_url
+
+              # 如果需要优先某些稳定源，可以在这里调整顺序或添加更多逻辑
+
+          new_sources = []
+
+          if normal_base:
+              new_sources.append({
+                  "id": "my_source_1",
+                  "name": "我的精选源",
+                  "baseUrl": normal_base,
+                  "group": "normal",
+                  "priority": 1
+              })
+
+          if adult_base:
+              new_sources.append({
+                  "id": "extra_source_1",       # 不明显的 id
+                  "name": "隐藏资源",           # 不明显的名称（可改为“备用线路”、“高级合集”、“私人源”等）
+                  "baseUrl": adult_base,
+                  "group": "adult",             # 保留 adult 让 App 能正确识别并隐藏/开关
+                  "enabled": True
+              })
+
+          # 输出文件路径（可改名，如 sources.json）
+          output_path = "converted_sources.json"
+          with open(output_path, 'w', encoding='utf-8') as f:
+              json.dump(new_sources, f, indent=2, ensure_ascii=False)
+
+          print(f"转换完成！生成文件：{output_path}")
+          print("内容预览：")
+          print(json.dumps(new_sources, indent=2, ensure_ascii=False))
+          PY
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add converted_sources.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: rewrite sources from hafrey1 (obfuscate adult)" && git push)
