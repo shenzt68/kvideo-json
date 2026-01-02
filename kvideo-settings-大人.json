@@ -1,0 +1,177 @@
+[
+  {
+    "id": "91md",
+    "name": "麻豆视频",
+    "baseUrl": "https://91md.me/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "91jp",
+    "name": "91精品",
+    "baseUrl": "https://91jpzyw.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "lbapiby",
+    "name": "AIvin",
+    "baseUrl": "http://lbapiby.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "155zy",
+    "name": "155资源",
+    "baseUrl": "https://155api.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "yutu",
+    "name": "玉兔资源",
+    "baseUrl": "https://apiyutu.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "fhapi",
+    "name": "番号资源",
+    "baseUrl": "http://fhapi9.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "apilsbzy",
+    "name": "老色逼",
+    "baseUrl": "https://apilsbzy1.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "yyzy",
+    "name": "优优资源",
+    "baseUrl": "https://www.yyzywcj.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "xiaojizy",
+    "name": "小鸡资源",
+    "baseUrl": "https://api.xiaojizy.live/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "hsck",
+    "name": "黄色仓库",
+    "baseUrl": "https://hsckzy.xyz/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "danaizi",
+    "name": "大奶子",
+    "baseUrl": "https://apidanaizi.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "jkun",
+    "name": "jkun资源",
+    "baseUrl": "https://jkunzyapi.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "lbapi9",
+    "name": "乐播资源",
+    "baseUrl": "https://lbapi9.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "naixx",
+    "name": "奶香资源",
+    "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "slapibf",
+    "name": "森林资源",
+    "baseUrl": "https://beiyong.slapibf.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "apilj",
+    "name": "辣椒资源",
+    "baseUrl": "https://pz.168188.dpdns.org/?url=https://apilj.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "shayu",
+    "name": "鲨鱼资源",
+    "baseUrl": "https://shayuapi.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "xzy",
+    "name": "幸资源",
+    "baseUrl": "https://xzybb2.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "doudou",
+    "name": "豆豆资源",
+    "baseUrl": "https://api.douapi.cc/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "didi",
+    "name": "滴滴资源",
+    "baseUrl": "https://api.ddapi.cc/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "heiliao",
+    "name": "黑料资源",
+    "baseUrl": "https://www.heiliaozyapi.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "bwzy",
+    "name": "百万资源",
+    "baseUrl": "https://api.bwzyz.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "taohua",
+    "name": "桃花资源",
+    "baseUrl": "https://thzy1.me/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "jingpin",
+    "name": "精品资源",
+    "baseUrl": "https://www.jingpinx.com/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  },
+  {
+    "id": "souav",
+    "name": "souavZY",
+    "baseUrl": "https://api.souavzyw.net/api.php/provide/vod",
+    "group": "love",
+    "enabled": true
+  }
+]
