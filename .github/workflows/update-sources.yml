@@ -5,6 +5,9 @@ on:
     - cron: '0 0 * * *'  # 每天 UTC 0 点自动运行（北京时间早上 8 点）
   workflow_dispatch:  # 支持手动触发
 
+permissions:
+  contents: write  # 关键修复：授予写权限，让 git push 成功
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -43,7 +46,7 @@ jobs:
           normal_base = None
           adult_base = None
 
-          # 成人关键词（覆盖当前所有敏感源）
+          # 成人关键词（已覆盖当前所有敏感源）
           adult_keywords = [
               "麻豆", "91", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
               "大奶", "奶香", "森林", "辣椒", "鲨鱼", "幸", "黑料", "桃花",
