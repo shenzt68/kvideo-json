@@ -43,9 +43,9 @@ jobs:
               exit(1)
 
           normal_sources = []
-          adult_sources = []
+          adult_sources = []  # 现在叫 vip 来源，但逻辑仍是成人源
 
-          # 成人关键词（覆盖 🔞 和所有敏感词）
+          # 成人关键词（覆盖所有敏感源）
           adult_keywords = [
               "🔞", "麻豆", "91", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
               "大奶", "奶香", "森林", "辣椒", "鲨鱼", "幸", "黑料", "桃花",
@@ -53,7 +53,7 @@ jobs:
           ]
 
           normal_count = 1
-          adult_count = 1
+          vip_count = 1
 
           for item in api_site.values():
               api_url = item.get("api")
@@ -67,15 +67,14 @@ jobs:
 
               if is_adult:
                   adult_sources.append({
-                      "id": f"extra_source_{adult_count}",
-                      "name": f"备用线路{adult_count}",  # 不明显、可改为“VIP线路{adult_count}”等
+                      "id": f"extra_source_{vip_count}",
+                      "name": f"备用线路{vip_count}",  # 可改为“VIP线路{vip_count}”、“私人通道{vip_count}”等
                       "baseUrl": api_url,
-                      "group": "adult",
+                      "group": "vip",               # 关键修改：不明显标识
                       "enabled": True
                   })
-                  adult_count += 1
+                  vip_count += 1
               else:
-                  # 普通源使用原名称（安全，无敏感词）
                   display_name = orig_name.strip() or "精选源"
                   normal_sources.append({
                       "id": f"normal_source_{normal_count}",
@@ -91,14 +90,14 @@ jobs:
           with open(normal_path, 'w', encoding='utf-8') as f:
               json.dump(normal_sources, f, indent=2, ensure_ascii=False)
 
-          # 写入 隐藏资源.json
+          # 写入 隐藏资源.json（文件名仍叫隐藏资源，但内容已低调）
           adult_path = "隐藏资源.json"
           with open(adult_path, 'w', encoding='utf-8') as f:
               json.dump(adult_sources, f, indent=2, ensure_ascii=False)
 
           print("生成成功！")
           print(f"普通源数量: {len(normal_sources)}")
-          print(f"成人源数量: {len(adult_sources)}")
+          print(f"VIP（原成人）源数量: {len(adult_sources)}")
           PY
 
       - name: Commit and push changes
@@ -106,4 +105,4 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add 普通资源.json 隐藏资源.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: include ALL normal and adult sources from hafrey1" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: all sources, adult group changed to 'vip' for obfuscation" && git push)
