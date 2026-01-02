@@ -1,4 +1,4 @@
-name: Update KVideo Sources from hafrey1
+name: Update KVideo All Sources from hafrey1
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # 支持手动触发
 
 permissions:
-  contents: write  # 关键修复：授予写权限，让 git push 成功
+  contents: write  # 允许 git push
 
 jobs:
   update:
@@ -20,14 +20,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Download and generate sources
+      - name: Download and generate all sources
         run: |
           python - <<'PY'
           import json
           import urllib.request
           from urllib.error import URLError
 
-          # 稳定 raw URL
           url = "https://raw.githubusercontent.com/hafrey1/LunaTV-config/main/jingjian.json"
 
           try:
@@ -43,70 +42,63 @@ jobs:
               print("api_site 为空！")
               exit(1)
 
-          normal_base = None
-          adult_base = None
+          normal_sources = []
+          adult_sources = []
 
-          # 成人关键词（已覆盖当前所有敏感源）
+          # 成人关键词（覆盖 🔞 和所有敏感词）
           adult_keywords = [
-              "麻豆", "91", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
+              "🔞", "麻豆", "91", "AIvin", "155", "玉兔", "番号", "老色", "黄色",
               "大奶", "奶香", "森林", "辣椒", "鲨鱼", "幸", "黑料", "桃花",
-              "精品", "souav", "老色逼", "大奶子"
+              "精品", "souav", "老色逼", "大奶子", "jkun", "乐播", "百万"
           ]
 
-          # 优先取卧龙资源（稳定普通源）
-          if "wolongzyw.com" in api_site:
-              normal_base = api_site["wolongzyw.com"].get("api")
+          normal_count = 1
+          adult_count = 1
 
-          # 如果没有卧龙，取第一个非成人源
-          if not normal_base:
-              for item in api_site.values():
-                  name_lower = item.get("name", "").lower()
-                  api_url = item.get("api")
-                  if api_url and not any(kw.lower() in name_lower for kw in adult_keywords):
-                      normal_base = api_url
-                      break
-
-          # 取第一个成人源
           for item in api_site.values():
-              name_lower = item.get("name", "").lower()
               api_url = item.get("api")
-              if api_url and any(kw.lower() in name_lower for kw in adult_keywords):
-                  adult_base = api_url
-                  break
+              orig_name = item.get("name", "未知源")
+              name_lower = orig_name.lower()
 
-          # 生成 普通资源.json
-          normal_sources = []
-          if normal_base:
-              normal_sources.append({
-                  "id": "my_source_1",
-                  "name": "我的精选源",
-                  "baseUrl": normal_base,
-                  "group": "normal",
-                  "priority": 1
-              })
+              if not api_url:
+                  continue
 
+              is_adult = any(kw.lower() in name_lower for kw in adult_keywords)
+
+              if is_adult:
+                  adult_sources.append({
+                      "id": f"extra_source_{adult_count}",
+                      "name": f"备用线路{adult_count}",  # 不明显、可改为“VIP线路{adult_count}”等
+                      "baseUrl": api_url,
+                      "group": "adult",
+                      "enabled": True
+                  })
+                  adult_count += 1
+              else:
+                  # 普通源使用原名称（安全，无敏感词）
+                  display_name = orig_name.strip() or "精选源"
+                  normal_sources.append({
+                      "id": f"normal_source_{normal_count}",
+                      "name": display_name,
+                      "baseUrl": api_url,
+                      "group": "normal",
+                      "priority": 1
+                  })
+                  normal_count += 1
+
+          # 写入 普通资源.json
           normal_path = "普通资源.json"
           with open(normal_path, 'w', encoding='utf-8') as f:
               json.dump(normal_sources, f, indent=2, ensure_ascii=False)
 
-          # 生成 隐藏资源.json
-          adult_sources = []
-          if adult_base:
-              adult_sources.append({
-                  "id": "extra_source_1",
-                  "name": "备用线路",  # 不明显名称，可改为“VIP通道”、“高级合集”等
-                  "baseUrl": adult_base,
-                  "group": "adult",
-                  "enabled": True
-              })
-
+          # 写入 隐藏资源.json
           adult_path = "隐藏资源.json"
           with open(adult_path, 'w', encoding='utf-8') as f:
               json.dump(adult_sources, f, indent=2, ensure_ascii=False)
 
           print("生成成功！")
-          print(f"普通源: {normal_base}")
-          print(f"成人源: {adult_base}")
+          print(f"普通源数量: {len(normal_sources)}")
+          print(f"成人源数量: {len(adult_sources)}")
           PY
 
       - name: Commit and push changes
@@ -114,4 +106,4 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add 普通资源.json 隐藏资源.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: generate 普通资源.json and 隐藏资源.json from hafrey1" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto update: include ALL normal and adult sources from hafrey1" && git push)
