@@ -1,0 +1,9 @@
+[
+  {
+    "id": "extra_source_1",
+    "name": "备用线路",
+    "baseUrl": "https://91md.me/api.php/provide/vod",
+    "group": "adult",
+    "enabled": true
+  }
+]

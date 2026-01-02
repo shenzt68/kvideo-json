@@ -1,0 +1,9 @@
+[
+  {
+    "id": "my_source_1",
+    "name": "我的精选源",
+    "baseUrl": "https://wolongzyw.com/api.php/provide/vod",
+    "group": "normal",
+    "priority": 1
+  }
+]
