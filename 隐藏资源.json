@@ -3,175 +3,175 @@
     "id": "extra_source_1",
     "name": "备用线路1",
     "baseUrl": "https://91md.me/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_2",
     "name": "备用线路2",
     "baseUrl": "https://91jpzyw.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_3",
     "name": "备用线路3",
     "baseUrl": "http://lbapiby.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_4",
     "name": "备用线路4",
     "baseUrl": "https://155api.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_5",
     "name": "备用线路5",
     "baseUrl": "https://apiyutu.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_6",
     "name": "备用线路6",
     "baseUrl": "http://fhapi9.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_7",
     "name": "备用线路7",
     "baseUrl": "https://apilsbzy1.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_8",
     "name": "备用线路8",
     "baseUrl": "https://www.yyzywcj.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_9",
     "name": "备用线路9",
     "baseUrl": "https://api.xiaojizy.live/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_10",
     "name": "备用线路10",
     "baseUrl": "https://hsckzy.xyz/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_11",
     "name": "备用线路11",
     "baseUrl": "https://apidanaizi.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_12",
     "name": "备用线路12",
     "baseUrl": "https://jkunzyapi.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_13",
     "name": "备用线路13",
     "baseUrl": "https://lbapi9.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_14",
     "name": "备用线路14",
     "baseUrl": "https://Naixxzy.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_15",
     "name": "备用线路15",
     "baseUrl": "https://beiyong.slapibf.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_16",
     "name": "备用线路16",
     "baseUrl": "https://pz.168188.dpdns.org/?url=https://apilj.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_17",
     "name": "备用线路17",
     "baseUrl": "https://shayuapi.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_18",
     "name": "备用线路18",
     "baseUrl": "https://xzybb2.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_19",
     "name": "备用线路19",
     "baseUrl": "https://api.douapi.cc/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_20",
     "name": "备用线路20",
     "baseUrl": "https://api.ddapi.cc/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_21",
     "name": "备用线路21",
     "baseUrl": "https://www.heiliaozyapi.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_22",
     "name": "备用线路22",
     "baseUrl": "https://api.bwzyz.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_23",
     "name": "备用线路23",
     "baseUrl": "https://thzy1.me/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_24",
     "name": "备用线路24",
     "baseUrl": "https://www.jingpinx.com/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_25",
     "name": "备用线路25",
     "baseUrl": "https://api.souavzyw.net/api.php/provide/vod",
-    "group": "adult",
+    "group": "vip",
     "enabled": true
   }
 ]
