@@ -198,7 +198,7 @@
   {
     "id": "normal_source_29",
     "name": "🎬艾旦影视",
-    "baseUrl": "https://pz.v88.qzz.io/?url=https://lovedan.net/api.php/provide/vod",
+    "baseUrl": "https://lovedan.net/api.php/provide/vod",
     "group": "normal",
     "priority": 1
   }
