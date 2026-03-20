@@ -2,7 +2,7 @@ name: Update KVideo All Sources from hafrey1
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 0 点自动运行（北京时间早上 8 点）
+    - cron_expression = '0 0 * * 2'  # 每周二凌晨 0 点运行
   workflow_dispatch:  # 支持手动触发
 
 permissions:
