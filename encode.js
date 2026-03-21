@@ -5,7 +5,7 @@ const https = require('https');
 
 const templateUrl = 'https://raw.githubusercontent.com/hafrey1/LunaTV-config/refs/heads/main/LunaTV-config.json';
 const outDir = 'ouotv';
-const date = new Date().toISOString().split('T')[0];  // 如 2026-03-21
+const date = new Date().toISOString().split('T')[0];
 
 const jsonFilename = `ouonnki-tv-sources-${date}.json`;
 const txtFilename = `ouonnki-tv-sources-${date}.txt`;
@@ -13,45 +13,37 @@ const txtFilename = `ouonnki-tv-sources-${date}.txt`;
 const jsonPath = path.join(outDir, jsonFilename);
 const txtPath = path.join(outDir, txtFilename);
 
-function downloadJson(url, callback) {
-  https.get(url, (res) => {
-    let data = '';
-    res.on('data', (chunk) => { data += chunk; });
-    res.on('end', () => {
-      try {
-        const parsed = JSON.parse(data);  // 先验证合法性
-        callback(null, data);
-      } catch (err) {
-        callback(err);
-      }
-    });
-  }).on('error', callback);
-}
+console.log(`开始生成 ${date} 的配置...`);
 
-downloadJson(templateUrl, (err, jsonStr) => {
-  if (err) {
-    console.error('下载或解析失败:', err.message);
-    process.exit(1);
-  }
+https.get(templateUrl, (res) => {
+  let data = '';
+  res.on('data', chunk => data += chunk);
+  res.on('end', () => {
+    try {
+      // 解析 hafrey1 原文件
+      const obj = JSON.parse(data);
+      obj.updated = date;                    // 加入日期
+      const jsonStr = JSON.stringify(obj, null, 2);
 
-  let obj;
-  try {
-    obj = JSON.parse(jsonStr);
-    obj.updated = date;  // 添加/更新日期
-    jsonStr = JSON.stringify(obj, null, 2);
-  } catch (e) {
-    console.error('JSON 处理失败:', e.message);
-    process.exit(1);
-  }
+      // 创建目录并保存文件
+      fs.mkdirSync(outDir, { recursive: true });
+      fs.writeFileSync(jsonPath, jsonStr, 'utf8');
 
-  // 保存 JSON
-  fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(jsonPath, jsonStr, 'utf8');
+      // Base58 编码
+      const buf = Buffer.from(jsonStr, 'utf8');
+      const encoded = bs58.encode(buf);
+      fs.writeFileSync(txtPath, encoded, 'utf8');
 
-  // Base58
-  const buf = Buffer.from(jsonStr, 'utf8');
-  const encoded = bs58.encode(buf);
-  fs.writeFileSync(txtPath, encoded, 'utf8');
-
-  console.log(`生成成功：${jsonFilename} 和 ${txtFilename}`);
+      console.log(`✅ 生成成功！`);
+      console.log(`   📄 JSON:  ouotv/${jsonFilename}`);
+      console.log(`   📝 Base58: ouotv/${txtFilename}`);
+      console.log(`   长度: ${encoded.length} 字符`);
+    } catch (err) {
+      console.error('❌ 处理失败:', err.message);
+      process.exit(1);
+    }
+  });
+}).on('error', (err) => {
+  console.error('❌ 下载失败:', err.message);
+  process.exit(1);
 });
