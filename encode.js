@@ -1,5 +1,3 @@
-// encode.js （完整替换成下面内容）
-
 const fs = require('fs');
 const bs58 = require('bs58');
 const path = require('path');
@@ -8,13 +6,11 @@ const https = require('https');
 const templateUrl = 'https://raw.githubusercontent.com/hafrey1/LunaTV-config/refs/heads/main/LunaTV-config.json';
 const outDir = 'ouotv';
 
-const fixedJsonName = 'ouonnki-tv-sources-latest.json';
-const fixedTxtName  = 'ouonnki-tv-sources-latest.txt';
+const fixedJson = 'ouonnki-tv-sources-latest.json';  // 数组版
+const fixedTxt  = 'ouonnki-tv-sources-latest.txt';
 
-const jsonPath = path.join(outDir, fixedJsonName);
-const txtPath  = path.join(outDir, fixedTxtName);
-
-console.log('开始从 hafrey1 下载并处理最新配置...');
+const jsonPath = path.join(outDir, fixedJson);
+const txtPath  = path.join(outDir, fixedTxt);
 
 https.get(templateUrl, (res) => {
   let data = '';
@@ -22,36 +18,37 @@ https.get(templateUrl, (res) => {
   res.on('end', () => {
     try {
       const original = JSON.parse(data);
+      const apiSites = original.api_site || {};
 
-      // 可在此处对内容做自定义修改（示例：添加更新时间）
-      const now = new Date().toISOString();
-      original.updated = now.split('T')[0];           // 只保留日期 2026-03-21
-      original._note = `自动更新于 ${now}`;
+      // 转成 TVBox 常见的数组格式
+      const arrayConfig = Object.entries(apiSites).map(([domain, info]) => ({
+        key: domain.replace(/\./g, '_'),  // 避免点号问题
+        name: info.name || domain,
+        type: 3,                           // CMS 接口
+        api: info.api,
+        search: 1,
+        quickSearch: 1,
+        filter: !!info.detail
+      }));
 
-      const jsonStr = JSON.stringify(original, null, 2);
+      const jsonStr = JSON.stringify(arrayConfig, null, 2);
 
-      // 确保目录存在
       fs.mkdirSync(outDir, { recursive: true });
-
-      // 覆盖写入固定文件名
       fs.writeFileSync(jsonPath, jsonStr, 'utf8');
 
-      // Base58 版本也覆盖
       const buf = Buffer.from(jsonStr, 'utf8');
       const encoded = bs58.encode(buf);
       fs.writeFileSync(txtPath, encoded, 'utf8');
 
-      console.log('生成并覆盖成功（固定文件名）：');
-      console.log(`   JSON:  ${fixedJsonName}`);
-      console.log(`   Base58:${fixedTxtName}`);
-      console.log(`   更新时间: ${original.updated}`);
-      console.log(`   Base58 长度: ${encoded.length} 字符`);
+      console.log(`生成数组格式 latest 文件成功`);
+      console.log(`JSON: ${fixedJson}`);
+      console.log(`Base58: ${fixedTxt}`);
     } catch (err) {
-      console.error('处理失败:', err.message);
+      console.error('失败:', err.message);
       process.exit(1);
     }
   });
-}).on('error', (err) => {
+}).on('error', err => {
   console.error('下载失败:', err.message);
   process.exit(1);
 });
