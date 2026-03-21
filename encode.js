@@ -1,3 +1,5 @@
+// encode.js （完整替换成下面内容）
+
 const fs = require('fs');
 const bs58 = require('bs58');
 const path = require('path');
@@ -5,13 +7,14 @@ const https = require('https');
 
 const templateUrl = 'https://raw.githubusercontent.com/hafrey1/LunaTV-config/refs/heads/main/LunaTV-config.json';
 const outDir = 'ouotv';
-const date = new Date().toISOString().split('T')[0];
 
-const jsonFilename = `ouonnki-tv-sources-${date}-array.json`;
-const txtFilename = `ouonnki-tv-sources-${date}-array.txt`;
+const fixedJsonName = 'ouonnki-tv-sources-latest.json';
+const fixedTxtName  = 'ouonnki-tv-sources-latest.txt';
 
-const jsonPath = path.join(outDir, jsonFilename);
-const txtPath = path.join(outDir, txtFilename);
+const jsonPath = path.join(outDir, fixedJsonName);
+const txtPath  = path.join(outDir, fixedTxtName);
+
+console.log('开始从 hafrey1 下载并处理最新配置...');
 
 https.get(templateUrl, (res) => {
   let data = '';
@@ -19,31 +22,30 @@ https.get(templateUrl, (res) => {
   res.on('end', () => {
     try {
       const original = JSON.parse(data);
-      const sitesObj = original.api_site || {};
 
-      // 转成数组格式
-      const sitesArray = Object.keys(sitesObj).map(key => {
-        const site = sitesObj[key];
-        return {
-          key: key.replace(/\./g, '_'),  // key 避免点号问题
-          name: site.name || key,
-          type: 3,
-          api: site.api,
-          search: 1,
-          filter: site.detail ? 1 : 0
-        };
-      });
+      // 可在此处对内容做自定义修改（示例：添加更新时间）
+      const now = new Date().toISOString();
+      original.updated = now.split('T')[0];           // 只保留日期 2026-03-21
+      original._note = `自动更新于 ${now}`;
 
-      const jsonStr = JSON.stringify(sitesArray, null, 2);
+      const jsonStr = JSON.stringify(original, null, 2);
 
+      // 确保目录存在
       fs.mkdirSync(outDir, { recursive: true });
+
+      // 覆盖写入固定文件名
       fs.writeFileSync(jsonPath, jsonStr, 'utf8');
 
+      // Base58 版本也覆盖
       const buf = Buffer.from(jsonStr, 'utf8');
       const encoded = bs58.encode(buf);
       fs.writeFileSync(txtPath, encoded, 'utf8');
 
-      console.log(`生成数组格式成功：${jsonFilename} 和 ${txtFilename}`);
+      console.log('生成并覆盖成功（固定文件名）：');
+      console.log(`   JSON:  ${fixedJsonName}`);
+      console.log(`   Base58:${fixedTxtName}`);
+      console.log(`   更新时间: ${original.updated}`);
+      console.log(`   Base58 长度: ${encoded.length} 字符`);
     } catch (err) {
       console.error('处理失败:', err.message);
       process.exit(1);
