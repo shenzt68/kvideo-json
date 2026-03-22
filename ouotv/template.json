@@ -1,0 +1,9 @@
+{
+  "cache_time": 7200,
+  "api_site": {
+    "iqiyizyapi.com": { "name": "爱奇艺", "api": "https://iqiyizyapi.com/api.php/provide/vod", "detail": "https://iqiyizyapi.com" },
+    "dbzy.tv": { "name": "豆瓣资源", "api": "https://caiji.dbzy5.com/api.php/provide/vod", "detail": "https://dbzy.tv" },
+    // …… 完整粘贴 hafrey1 的所有 api_site 内容（省略部分，实际请全部复制）
+    "wujinzy.com": { "name": "无尽影视", "api": "https://api.wujinapi.com/api.php/provide/vod", "detail": "https://wujinzy.com" }
+  }
+}
