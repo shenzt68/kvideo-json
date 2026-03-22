@@ -114,55 +114,48 @@
   {
     "id": "extra_source_17",
     "name": "备用线路17",
-    "baseUrl": "https://xzybb2.com/api.php/provide/vod",
+    "baseUrl": "https://api.douapi.cc/api.php/provide/vod",
     "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_18",
     "name": "备用线路18",
-    "baseUrl": "https://api.douapi.cc/api.php/provide/vod",
+    "baseUrl": "https://api.ddapi.cc/api.php/provide/vod",
     "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_19",
     "name": "备用线路19",
-    "baseUrl": "https://api.ddapi.cc/api.php/provide/vod",
+    "baseUrl": "https://www.heiliaozyapi.com/api.php/provide/vod",
     "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_20",
     "name": "备用线路20",
-    "baseUrl": "https://www.heiliaozyapi.com/api.php/provide/vod",
+    "baseUrl": "https://api.bwzyz.com/api.php/provide/vod",
     "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_21",
     "name": "备用线路21",
-    "baseUrl": "https://api.bwzyz.com/api.php/provide/vod",
+    "baseUrl": "https://thzy1.me/api.php/provide/vod",
     "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_22",
     "name": "备用线路22",
-    "baseUrl": "https://thzy1.me/api.php/provide/vod",
+    "baseUrl": "https://www.jingpinx.com/api.php/provide/vod",
     "group": "vip",
     "enabled": true
   },
   {
     "id": "extra_source_23",
     "name": "备用线路23",
-    "baseUrl": "https://www.jingpinx.com/api.php/provide/vod",
-    "group": "vip",
-    "enabled": true
-  },
-  {
-    "id": "extra_source_24",
-    "name": "备用线路24",
     "baseUrl": "https://api.souavzyw.net/api.php/provide/vod",
     "group": "vip",
     "enabled": true
