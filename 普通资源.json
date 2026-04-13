@@ -163,28 +163,28 @@
   {
     "id": "normal_source_24",
     "name": "🎬如意资源",
-    "baseUrl": "https://pz.168188.dpdns.org/?url=https://cj.rycjapi.com/api.php/provide/vod",
+    "baseUrl": "https://pz.v88.qzz.io/?url=https://cj.rycjapi.com/api.php/provide/vod",
     "group": "normal",
     "priority": 1
   },
   {
     "id": "normal_source_25",
     "name": "🎬豪华资源",
-    "baseUrl": "https://pz.168188.dpdns.org/?url=https://hhzyapi.com/api.php/provide/vod",
+    "baseUrl": "https://pz.v88.qzz.io/?url=https://hhzyapi.com/api.php/provide/vod",
     "group": "normal",
     "priority": 1
   },
   {
     "id": "normal_source_26",
     "name": "🎬百度云zy",
-    "baseUrl": "https://pz.168188.dpdns.org/?url=https://api.apibdzy.com/api.php/provide/vod",
+    "baseUrl": "https://pz.v88.qzz.io/?url=https://api.apibdzy.com/api.php/provide/vod",
     "group": "normal",
     "priority": 1
   },
   {
     "id": "normal_source_27",
     "name": "🎬艾旦影视",
-    "baseUrl": "https://pz.168188.dpdns.org/?url=https://lovedan.net/api.php/provide/vod",
+    "baseUrl": "https://pz.v88.qzz.io/?url=https://lovedan.net/api.php/provide/vod",
     "group": "normal",
     "priority": 1
   }
